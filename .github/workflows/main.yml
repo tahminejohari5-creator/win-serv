@@ -13,8 +13,8 @@ jobs:
         run: net user runneradmin GamePassword123!
       - name: Start Pinggy TCP Tunnel
         run: |
-          Start-Process ssh -ArgumentList "-o StrictHostKeyChecking=no -p 443 -R0:localhost:3389 tcp@a.pinggy.io" -RedirectStandardOutput tunnel.log -RedirectStandardError tunnel.log
+          Start-Process ssh -ArgumentList "-o StrictHostKeyChecking=no -p 443 -R0:localhost:3389 tcp@a.pinggy.io" -RedirectStandardOutput out.log -RedirectStandardError err.log
           Start-Sleep -Seconds 10
-          Get-Content tunnel.log
+          Get-Content out.log
       - name: Keep Alive
         run: sleep 21600
