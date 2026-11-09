@@ -11,11 +11,5 @@ jobs:
           Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
       - name: Set Password
         run: net user runneradmin GamePassword123!
-      - name: Start Ngrok TCP Tunnel
-        run: |
-          Invoke-WebRequest https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-windows-amd64.zip -OutFile ngrok.zip
-          Expand-Archive ngrok.zip -DestinationPath . -Force
-          .\ngrok.exe config add-authtoken 3LSo2HBeCN3JTML1C8AfW6Iaow5_3Y4VJyVlgD87FLjRG
-          .\ngrok.exe tcp 3389
-      - name: Keep Alive
-        run: sleep 21600
+      - name: Start Pinggy TCP Tunnel
+        run: ssh -o StrictHostKeyChecking=no -p 443 -R0:localhost:3389 tcp@a.pinggy.io
