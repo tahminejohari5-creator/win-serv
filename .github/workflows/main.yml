@@ -11,10 +11,8 @@ jobs:
           Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
       - name: Set Password
         run: net user runneradmin GamePassword123!
-      - name: Start Pinggy TCP Tunnel
+      - name: Start TCP Tunnel (Bore)
         run: |
-          Start-Process ssh -ArgumentList "-o StrictHostKeyChecking=no -p 443 -R0:localhost:3389 tcp@a.pinggy.io" -RedirectStandardOutput out.log -RedirectStandardError err.log
-          Start-Sleep -Seconds 10
-          Get-Content err.log
-      - name: Keep Alive
-        run: sleep 21600
+          Invoke-WebRequest https://github.com/ekzhang/bore/releases/download/v0.5.1/bore-v0.5.1-x86_64-pc-windows-msvc.zip -OutFile bore.zip
+          Expand-Archive bore.zip -DestinationPath . -Force
+          .\bore.exe local 3389 --to bore.pub
