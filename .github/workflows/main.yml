@@ -15,6 +15,6 @@ jobs:
         run: |
           Start-Process ssh -ArgumentList "-o StrictHostKeyChecking=no -p 443 -R0:localhost:3389 tcp@a.pinggy.io" -RedirectStandardOutput out.log -RedirectStandardError err.log
           Start-Sleep -Seconds 10
-          Get-Content out.log
+          Get-Content err.log
       - name: Keep Alive
         run: sleep 21600
