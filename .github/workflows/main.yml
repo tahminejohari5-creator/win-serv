@@ -11,9 +11,9 @@ jobs:
           Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
       - name: Set Password
         run: net user runneradmin GamePassword123!
-      - name: Install Node & LocalTunnel
+      - name: Download & Start Cloudflare Tunnel
         run: |
-          npm install -g localtunnel
-          lt --port 3389
+          Invoke-WebRequest https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe -OutFile cloudflared.exe
+          .\cloudflared.exe tunnel --url rdp://localhost:3389
       - name: Keep Alive
         run: sleep 21600
